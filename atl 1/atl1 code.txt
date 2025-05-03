@@ -1,0 +1,69 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import urllib.request
+from pandas.plotting import andrews_curves, parallel_coordinates, radviz
+sns.set(style="white", color_codes=True)
+%matplotlib inline
+
+# Set Seaborn style
+sns.set(style="white", color_codes=True)
+%matplotlib inline
+
+# Download the dataset from UCI and load it
+url = "https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data"
+columns = ["SepallengthCm", "SepalWidthCm", "PetalLengthCm", "PetalWidthCm", "Species"]
+
+# Read dataset into Pandas DataFrame
+df = pd.read_csv(url, names=columns)
+
+df.head()
+
+df.columns
+
+# Scatter plot
+df.plot(kind="scatter", x="SepallengthCm", y="SepalWidthCm")
+plt.show()
+
+# Joint plot
+sns.jointplot(x="SepallengthCm", y="SepalWidthCm", data=df, height=5)
+plt.show()
+
+# FacetGrid scatter plot by Species
+sns.FacetGrid(df, hue="Species", height=5) \
+   .map(plt.scatter, "SepallengthCm", "SepalWidthCm") \
+   .add_legend()
+plt.show()
+
+# Boxplots
+sns.boxplot(x="Species", y="PetalLengthCm", data=df)
+plt.show()
+
+ax = sns.boxplot(x="Species", y="PetalLengthCm", data=df)
+ax = sns.stripplot(x="Species", y="PetalLengthCm", data=df, jitter=True, edgecolor="gray")
+plt.show()
+
+# Violin plot
+sns.violinplot(x="Species", y="PetalLengthCm", data=df)
+plt.show()
+
+# KDE Plot
+sns.FacetGrid(df, hue="Species", height=6) \
+   .map(sns.kdeplot, "PetalLengthCm") \
+   .add_legend()
+plt.show()
+
+# Pairplot
+sns.pairplot(df, hue="Species", height=3)
+sns.pairplot(df, hue="Species", height=3, diag_kind="kde")
+plt.show()
+
+# Boxplot grouped by Species
+df.boxplot(by="Species")
+plt.show()
+
+# Andrews Curves
+plt.figure(figsize=(10, 5))
+andrews_curves(df, "Species")
+plt.show()
