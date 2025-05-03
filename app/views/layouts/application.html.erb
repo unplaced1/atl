@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>iTasks</title>
+  <%= csrf_meta_tags %>
+  <%= stylesheet_link_tag 'application',
+       'https://fonts.googleapis.com/css?family=Raleway',
+       media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="main-header">
+    <h1>iTasks</h1>
+    <nav class="user-nav">
+      <% if user_signed_in? %>
+        <%= link_to "Log out", destroy_user_session_path, 
+                    method: :delete, 
+                    class: "action-button log-out-button",
+                    data: { turbo_method: :delete } %>
+      <% else %>
+        <%= link_to "Log in", new_user_session_path, class: "action-button" %>
+      <% end %>
+    </nav>
+  </header>
+
+  <% flash.each do |name, msg| %>
+    <%= content_tag :div, msg, class: "flash-#{name}" %>
+  <% end %>
+
+  <main class="content">
+    <%= yield %>
+  </main>
+</body>
+</html>
