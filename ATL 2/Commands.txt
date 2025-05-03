@@ -1,9 +1,0 @@
-1. cd office_emp_proj
-2. python manage.py createsuperuser
-3. username:
-4. p/w:
-5. p/w again:
-SUPER USER CREATED SUCCESFULLY
-6. python manage.py runserver
-7. click on follow link
- 
